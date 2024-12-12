@@ -1,0 +1,141 @@
+@media (max-width: 768px) {
+    .card {
+        width: 100%;
+    }
+}
+
+
+/* Hover effect on card */
+.card:hover {
+    transform: scale(1.025);
+    transition: transform 0.3s ease;
+}
+
+/* General image styling */
+.card img {
+    width: 200px;
+    height: 300px;
+    object-fit: cover;
+    margin: 10px auto;
+    display: block;
+}
+
+/* Container layout */
+.container {
+    margin-top: 20px;
+    position: relative;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+/* Card styling */
+.card {
+    flex: 0 1 calc(200px + 20px);
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.card-body {
+    text-align: left;
+    padding: 10px;
+}
+
+.card-title {
+    font-size: 18px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.card-text {
+    font-size: 14px;
+    color: #555;
+}
+
+h1 {
+    padding: 20px;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.content {
+    flex: 1;
+}
+
+footer {
+    position: relative;
+    background-color: #343a40;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+}
+
+/* Movie details layout */
+.movie-details-container {
+    margin-top: 50px;
+}
+
+.movie-details-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.movie-details-text {
+    flex: 1;
+    padding-right: 20px;
+}
+
+.movie-poster {
+    flex-shrink: 0;
+    width: 200px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* Review styling */
+.collapse .review-form {
+    margin-top: 20px;
+}
+
+.reviews {
+    margin-top: 40px;
+}
+
+.review {
+    margin-bottom: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.vote-buttons a {
+    margin-right: 10px;
+}
+
+.vote-buttons button {
+    font-size: 14px;
+}
+
+.review-button {
+    margin-top: 15px;
+}

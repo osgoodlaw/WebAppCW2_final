@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block title %}Review {{ movie.title }}{% endblock %}
+
+{% block content %}
+<div class="container movie-details-container">
+    <!-- Movie Details Section -->
+    <div class="row movie-details-row">
+        <!-- Left Column (Text: Title, Genre, Description) -->
+        <div class="col-md-8 movie-details-text">
+            <h2>{{ movie.title }}</h2>
+            <p><strong>Genres:</strong> {% for genre in movie.genres %}{{ genre.name }}{% if not loop.last %}, {% endif %}{% endfor %}</p>
+            <p>{{ movie.description }}</p>
+            <hr>
+
+            <!-- Button to Add Review -->
+            <button class="btn btn-primary review-button" data-toggle="collapse" data-target="#reviewForm">Write a Review</button>
+        </div>
+
+        <!-- Right Column (Poster Image) -->
+        <div class="col-md-3">
+            {% if movie.poster_url %}
+                <img src="{{ url_for('static', filename='uploads/' + movie.poster_url) }}" alt="Movie Poster" 
+                     class="img-fluid movie-poster">
+            {% else %}
+                <p>No poster available</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Review Form Section (collapsed by default) -->
+    <div class="collapse mt-3" id="reviewForm">
+        <form method="POST" class="review-form">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                {{ form.content.label }}
+                {{ form.content(class="form-control", placeholder="Write your review...") }}
+            </div>
+            <button type="submit" class="btn btn-success">Submit Review</button>
+        </form>
+    </div>
+
+    <hr>
+
+    <!-- Reviews Section -->
+    <h3 class="mt-5 mb-3">Reviews</h3>
+    <div class="reviews">
+        {% for review in reviews %}
+            <div class="review mb-4 p-4 border rounded shadow-sm">
+                <div class="d-flex justify-content-between align-items-start">
+                    <p class="font-weight-bold">{{ review.user.username }}</p>
+                    
+                    <!-- Upvote and Downvote Buttons with Counts -->
+                    <div class="vote-buttons d-flex align-items-center">
+                        <a href="#" class="vote mr-2" id="review-{{ review.id }}-up">
+                            <button class="btn btn-outline-success btn-sm">
+                                Upvote <span id="up-count-{{ review.id }}" class="ml-2">{{ review.upvotes }}</span>
+                            </button>
+                        </a>
+                        <a href="#" class="vote" id="review-{{ review.id }}-down">
+                            <button class="btn btn-outline-danger btn-sm">
+                                Downvote <span id="down-count-{{ review.id }}" class="ml-2">{{ review.downvotes }}</span>
+                            </button>
+                        </a>
+                    </div>
+                </div>
+                <p>{{ review.content }}</p>
+            </div>
+        {% else %}
+            <p>No reviews yet. Be the first to leave one!</p>
+        {% endfor %}
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/vote.js') }}"></script>
+{% endblock %}

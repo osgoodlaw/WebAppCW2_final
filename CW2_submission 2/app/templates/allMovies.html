@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}All Movies{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="text-center">All Movies</h1>
+
+    <!-- Genre Filter Dropdown -->
+    <div class="mb-4 text-center">
+        <form method="GET" action="{{ url_for('allMovies') }}">
+            <label for="genre-select">Filter by Genre:</label>
+            <select name="genre" id="genre-select" class="form-control d-inline-block w-auto">
+                <option value="" {% if not selected_genre %}selected{% endif %}>All Genres</option>
+                {% for genre in genres %}
+                    <option value="{{ genre.name }}" {% if genre.name == selected_genre %}selected{% endif %}>
+                        {{ genre.name }}
+                    </option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="btn btn-primary">Filter</button>
+        </form>
+    </div>
+
+    <div class="row">
+        {% if movies %}
+            {% for movie in movies %}
+            <div class="card">
+                <!-- Movie Poster -->
+                <div>
+                    {% if movie.poster_url %}
+                        <img src="{{ url_for('static', filename='uploads/' + movie.poster_url) }}" 
+                            alt="Movie Poster">
+                    {% else %}
+                        <img src="https://via.placeholder.com/200x300" 
+                            alt="No Poster Available">
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    <!-- Movie Title -->
+                    <h4 class="card-title">{{ movie.title }}</h4>
+                    <!-- Movie Genres -->
+                    <p class="card-text"><strong>Genres:</strong> 
+                        {% for genre in movie.genres %}
+                            {{ genre.name }}{% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    </p>
+                    <!-- Movie Description -->
+                    <p class="card-text"><strong>Description:</strong> {{ movie.description }}</p>
+
+                    <!-- Link to the review page -->
+                    <a href="{{ url_for('review', movie_id=movie.id) }}" class="btn btn-info">Reviews</a>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-center">No movies found for the selected genre.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

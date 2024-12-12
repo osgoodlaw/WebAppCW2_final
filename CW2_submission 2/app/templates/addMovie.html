@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Movie{% endblock %}
+
+{% block content %}
+    <h2>Add a New Movie</h2>
+    
+    <!-- The form to submit a new movie. Method POST to send data, and enctype="multipart/form-data" for file uploads -->
+    <form method="POST" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}  <!-- This renders hidden CSRF token field -->
+
+        <!-- Movie Title Input -->
+        <div class="form-group">
+            <label for="title">Movie Title</label>
+            {{ form.title(class="form-control") }}  <!-- Render the title input field -->
+            {% if form.title.errors %}
+                <div class="alert alert-danger">  <!-- Display error messages if any -->
+                    {% for error in form.title.errors %}
+                        <p>{{ error }}</p>  <!-- Loop through and show each error -->
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Genre Selection Dropdown (Multi-select) -->
+        <div class="form-group">
+            <label for="genres">Genres</label>
+            {{ form.genres(class="form-control", multiple="multiple") }}  <!-- Render the multi-select for genres -->
+            {% if form.genres.errors %}
+                <div class="alert alert-danger">  <!-- Display error messages for genres -->
+                    {% for error in form.genres.errors %}
+                        <p>{{ error }}</p>  <!-- Loop through and show each error -->
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Movie Description Input -->
+        <div class="form-group">
+            <label for="description">Description</label>
+            {{ form.description(class="form-control") }}  <!-- Render description textarea -->
+            {% if form.description.errors %}
+                <div class="alert alert-danger">  <!-- Display error messages for description -->
+                    {% for error in form.description.errors %}
+                        <p>{{ error }}</p>  <!-- Loop through and show each error -->
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Poster Image Upload -->
+        <div class="form-group">
+            <label for="poster">Poster Image</label>
+            {{ form.poster(class="form-control") }}  <!-- Render file input for poster image -->
+            {% if form.poster.errors %}
+                <div class="alert alert-danger">  <!-- Display error messages for poster -->
+                    {% for error in form.poster.errors %}
+                        <p>{{ error }}</p>  <!-- Loop through and show each error -->
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary">Submit</button>  <!-- Submit the form -->
+    </form>
+{% endblock %}

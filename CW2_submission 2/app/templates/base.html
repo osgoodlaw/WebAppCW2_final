@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    
+    <!-- Include your custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='CW2_style.css') }}">
+
+
+    
+    <title>{% block title %}Movie Recommendation Platform{% endblock %}</title>
+</head>
+
+<body>
+    <div class="wrapper">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{{ url_for('dashboard') }}">MovieRecs</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        {% if current_user.is_authenticated %}
+                            <li class="nav-item">
+                                <a class="nav-link {% if current_page == 'dashboard' %}active{% endif %}" href="{{ url_for('dashboard') }}">Dashboard</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {% if current_page == 'allMovies' %}active{% endif %}" href="{{ url_for('allMovies') }}">All Movies</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {% if current_page == 'myMovies' %}active{% endif %}" href="{{ url_for('myMovies') }}">My Movies</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {% if current_page == 'addMovie' %}active{% endif %}" href="{{ url_for('addMovie') }}">Add Movie</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                            </li>
+                        {% else %}
+                        <!-- Navbar when not logged in -->
+                            <li class="nav-item">
+                                <a class="nav-link {% if current_page == 'login' %}active{% endif %}" href="{{ url_for('login') }}">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {% if current_page == 'register' %}active{% endif %}" href="{{ url_for('register') }}">Register</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="content">
+            <div class="container mt-4">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="bg-dark text-light">
+            <div class="container">
+                <p class="text-center">Movie Recommendation Platform &copy; {{ current_year }}. All Rights Reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Include jQuery (required for Bootstrap) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Include Popper.js (required for Bootstrap) -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+
+    <!-- Include Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+
+    <script src="{{ url_for('static', filename='js/rating.js') }}"></script>
+</body>
+</html>

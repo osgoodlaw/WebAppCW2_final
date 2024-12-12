@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <!-- Welcome Section -->
+    <div class="row mb-4">
+        <div class="col-md-12 text-center">
+            <h1 class="display-4">Welcome to Your Movie Dashboard, {{ current_user.username }}!</h1>
+            <p class="lead">Here are some personalized movie recommendations based on your preferences.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        {% if movies %}
+            {% for movie in movies %}
+            <div class="card" data-movie-id="{{ movie.id }}">
+                <!-- Movie Poster -->
+                <div>
+                    {% if movie.poster_url %}
+                        <img src="{{ url_for('static', filename='uploads/' + movie.poster_url) }}" 
+                            alt="Movie Poster">
+                    {% else %}
+                        <img src="https://via.placeholder.com/200x300"
+                            alt="No Poster Available">
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    <!-- Movie Title -->
+                    <h4 class="card-title">{{ movie.title }}</h4>
+                    <!-- Movie Genres -->
+                    <p class="card-text"><strong>Genres:</strong> 
+                        {% for genre in movie.genres %}
+                            {{ genre.name }}{% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    </p>
+                    <!-- Movie Description -->
+                    <p class="card-text"><strong>Description:</strong> {{ movie.description }}</p>
+
+                    <!-- Star Rating System -->
+                    <div class="star-rating" data-user-rating="{{ movie.user_rating }}">
+                        <span class="star" data-value="1">&#9733;</span>
+                        <span class="star" data-value="2">&#9733;</span>
+                        <span class="star" data-value="3">&#9733;</span>
+                        <span class="star" data-value="4">&#9733;</span>
+                        <span class="star" data-value="5">&#9733;</span>
+                    </div>
+
+                    <!-- Display the average rating dynamically -->
+                    <p id="average-rating-{{ movie.id }}">Average Rating: {{ movie.average_rating or 0 }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-center">You have not uploaded any movies yet.</p>
+        {% endif %}
+    </div>
+
+</div>
+
+{% endblock %}
